@@ -1004,8 +1004,8 @@ function rb_admin_url($path = '', $scheme = 'admin')
 {
     return convert2psurl($path);
 }
-//PHP 7.3, la funzione get_magic_quotes_gpc() è ancora disponibile, ma deprecata.
-/*function rb_parse_str($string, &$array)
+
+function rb_parse_str($string, &$array)
 {
     parse_str($string, $array);
     if (get_magic_quotes_gpc()) {
@@ -1013,21 +1013,7 @@ function rb_admin_url($path = '', $scheme = 'admin')
     }
 
     $array = rb_apply_filters('rb_parse_str', $array);
-}*/
-//sugerimento del cambio porzione codice
-function rb_parse_str($string, &$array)
-{
-    parse_str($string, $array);
-
-    // Rimuovere il controllo su get_magic_quotes_gpc() poiché non è più necessario
-    // Utilizzare stripslashes_deep() per rimuovere gli slash in modo sicuro (solo se la funzione è disponibile)
-    if (function_exists('rb_stripslashes_deep')) {
-        $array = rb_stripslashes_deep($array);
-    }
-
-    $array = rb_apply_filters('rb_parse_str', $array);
 }
-
 
 function rb_urlencode_deep($value)
 {
